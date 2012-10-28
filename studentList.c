@@ -1,29 +1,32 @@
 #include <stdio.h>
-#typedef int integer
-#typedef char *string
+#include <string.h>
+typedef int integer;
+typedef char string;
+
 struct studentData {
-   integer rollNumber;
-   string name;
-   student *link;
+   int rollNumber;
+   char *name;
+   struct studentData *link;
 };
+
 main()
 {
-  integer numOfStudents,i,rollNumber;
-  string str;
+  int numOfStudents,i,loc,rollNumber;
+  char *str;
   struct studentData *student;
-  student = (studentData*)malloc(sizeof(struct studentData)); 
-  printf("Enter the number of students in the linked list:")
+  student = (struct studentData*)malloc(sizeof(struct studentData)); 
+  printf("Enter the number of students in the linked list:");
   scanf("%d", &numOfStudents);
   for (i=0;i<numOfStudents;i++) 
   {
    printf("Enter the name of the student");
-   scanf("%s",&str);
+   scanf("%s",str);
    printf("Enter the Roll number") ;
    scanf("%d",&rollNumber);
    addStudent(&student,rollNumber,str);
   }
   printf("Enter the name of the student looking for");
-  scanf("%s",&str);
+  scanf("%s",str);
   loc=search(&student,str);
   if(loc > -1) 
   {
@@ -32,16 +35,16 @@ main()
   else {
     printf("The string was not found");
   }
-   printf("Enter the name of the student to delete");
-  scanf("%s",&str);
+  printf("Enter the name of the student to delete");
+  scanf("%s",str);
   loc=delete(&student,str);  
 }
 
-addStudent(struct **stud, int roll, char *s)
+addStudent(struct studentData **stud, int roll, char *s)
 {
    struct studentData *a;
-   a=*stud;
-   if {a->link==NULL} {
+   a = *stud;
+   if (a->link==NULL) {
    //Empty list
    a->rollNumber = roll;
    a->name = s;
@@ -57,8 +60,8 @@ addStudent(struct **stud, int roll, char *s)
      a->name = s;
      a->link =NULL;
    }
-  }
 }
+
 
 
 int search(struct studentData **a, char *s) 
@@ -68,7 +71,7 @@ int search(struct studentData **a, char *s)
   t = *a;
   while(t->link != NULL) 
   { loc++;
-    if {strcmp(t->name,s)} {
+    if (strcmp(t->name,s)==0) {
      return loc;
     }
    t=t->link;
@@ -79,19 +82,20 @@ int search(struct studentData **a, char *s)
 delete(struct studentData **a, char *s)
 {
    struct studentData *t,*temp, *old;
-   
+   int loc; 
    t = *a;
    while(t != NULL) 
    { 
      loc++;
-     if {strcmp(t->name,s)} {
+     if (strcmp(t->name,s)==0) {
       //Found match Hence deleting
       if (loc==1) {
        // First element;
        a = &(t->link);
        free(t);
       }
-      elseif (t->link == NULL) {
+      else if (t->link == NULL) 
+      {
          old->link = NULL;
       } else {
          old->link = t->link;
